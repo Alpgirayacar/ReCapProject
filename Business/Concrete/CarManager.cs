@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class CarManager : ICarService
+    public class CarManager :ICarService
     {
         
 
@@ -23,21 +25,45 @@ namespace Business.Concrete
             
         }
 
+        public IResult Add(Car car)
+        {
+            if (car.Description.Length < 2)
+            {
+                //magic strings
+                return new ErrorResult(Messages.CarNameInvalid);
+            }
+            _carDal.Add(car);
 
-
-        public List<Car> GetAll()
-        { 
-            return _carDal.GetAll();
+            return new SuccessResult(Messages.CarAdded);
         }
 
-        public List<Car> GetAllById(int id)
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll(p=>p.Id == id);   
+            if (DateTime.Now.Hour == 22)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
+
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
         }
 
-        public List<CarDetailDto> GetAllCarDetail()
+        public IDataResult<List<Car>> GetAllByBrandId(int brandId)
         {
-           return  _carDal.GetCarDetail();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == brandId));
+        }
+
+        public IDataResult<Car> GetById(int id)
+        {
+            return new SuccessDataResult<Car>(_carDal.Get(p => p.Id == id));
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
+        {
+            if (DateTime.Now.Hour == 23)
+            {
+                return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetail());
         }
     }
 }

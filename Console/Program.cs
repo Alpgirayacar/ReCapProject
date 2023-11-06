@@ -8,42 +8,35 @@ Console.WriteLine("Hello, World!");
 Console.WriteLine("=======Car List ========");
 CarTest();
 
-Console.WriteLine("===============");
-
-
-Console.WriteLine("=========Brand Test======");
-
-BrandTest();
-
-Console.WriteLine("===============");
-Console.WriteLine("=========CarColor Test======");
 
 
 
+//ColorTest();
 
-ColorTest();
 
 
 
 static void CarTest()
 {
     CarManager carManager = new CarManager(new EfCarDal());
-    foreach (var car in carManager.GetAll())
-    {
-        Console.WriteLine(car.Description);
-    }
-    Console.WriteLine("=======Special Car With id ========");
-    foreach (var car in carManager.GetAllById(1))
-    {
-        Console.WriteLine(car.Description);
-    }
 
-    Console.WriteLine("=====Deail Car==========");
-    foreach (var car in carManager.GetAll())
+    var result = carManager.GetAll();
+    if (result.Success == true)
     {
-        Console.WriteLine(car.Description+"/"+car.BrandId);
+
+        foreach (var car in result.Data)
+        {
+
+            Console.WriteLine(car.Description );
+        }
+
     }
-    Console.WriteLine("===============");
+    else
+    {
+        Console.WriteLine(result.Message);
+        Console.WriteLine("===============");
+    }
+    
 
  
 }
