@@ -21,25 +21,25 @@ namespace DataAccess.Concrete.InMemory
         {
             _cars = new List<Car>
                 {
-                    new Car {  Id = 1,
+                    new Car {  CarId = 1,
             BrandId = 101,
             ColorId = 201,
             ModelYear = 2023,
             DailyPrice = 50,
             Description = "Audi A3"},
-                    new Car { Id = 2,
+                    new Car { CarId = 2,
             BrandId = 102,
             ColorId = 202,
             ModelYear = 2022,
             DailyPrice = 40,
             Description = "BMW 3 Series"},
-                    new Car {   Id = 3,
+                    new Car {   CarId = 3,
     BrandId = 103,
     ColorId = 203,
     ModelYear = 2024,
     DailyPrice = 60,
     Description = "Mercedes C-Class"},
-                    new Car {   Id = 4,
+                    new Car {   CarId = 4,
     BrandId = 104,
     ColorId = 204,
     ModelYear = 2022,
@@ -60,7 +60,7 @@ namespace DataAccess.Concrete.InMemory
 
         public void Delete(Car car)
         {
-            Car carToDelete = _cars.SingleOrDefault(c=>c.Id==car.Id); 
+            Car carToDelete = _cars.SingleOrDefault(c=>c.CarId == car.CarId); 
             _cars.Remove(carToDelete);  
 
             
@@ -99,7 +99,7 @@ namespace DataAccess.Concrete.InMemory
         public void Update(Car car)
         {
 
-            Car carToUpdate = _cars.SingleOrDefault(c => c.Id == car.Id);
+            Car carToUpdate = _cars.SingleOrDefault(c => c.CarId == car.CarId);
             carToUpdate.Description= car.Description;   
             carToUpdate.DailyPrice= car.DailyPrice; 
             carToUpdate.ModelYear= car.ModelYear;   
