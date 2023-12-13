@@ -10,8 +10,12 @@ namespace WebAPI.Controllers
     public class CarsController : ControllerBase
     {
         ICarService _carService;
-        public CarsController(ICarService carService)
+
+         
+        public CarsController(ICarService carService) 
         {
+            
+        
             _carService = carService;  
             
         }
@@ -29,6 +33,9 @@ namespace WebAPI.Controllers
             
         }
 
+
+     
+
         [HttpPost("add")]
 
         public IActionResult Add(Car car)
@@ -42,6 +49,21 @@ namespace WebAPI.Controllers
             return BadRequest(result);  
 
         }
+
+        [HttpPost("update")]
+        public IActionResult Edit(Car car)
+        {
+            var result = _carService.Update(car);
+            if (result.Success == true)
+            {
+                return Ok(result);
+
+            }
+            return BadRequest(result);
+
+
+        }
+
         //[HttpPost("update")]
 
         //public IActionResult Update(Car car)

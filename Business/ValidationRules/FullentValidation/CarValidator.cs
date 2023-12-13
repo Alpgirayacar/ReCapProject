@@ -17,7 +17,7 @@ namespace Business.ValidationRules.FullentValidation
 
             RuleFor(c => c.Description).MinimumLength(2);
 
-            RuleFor(c => c.Description).Must(StartWithA).WithMessage("Ürünler A Harfi ile başlamalı");
+           // RuleFor(c => c.Description).Must(StartWithA).WithMessage("Ürünler A Harfi ile başlamalı");
 
 
 
