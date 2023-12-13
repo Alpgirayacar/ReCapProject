@@ -77,5 +77,13 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarUpdated);
 
         }
+
+        public IResult Delete(Car car)
+        {
+
+            _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
+
+        }
     }
 }

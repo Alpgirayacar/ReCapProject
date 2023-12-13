@@ -20,5 +20,6 @@ namespace Business.Constants
         public static string UsersListed = "ürünler Listelendi ";
         internal static string CarImagesListed= "fotoğraflar Listelendi";
         internal static string CarUpdated="ürün güncellendi";
+        internal static string CarDeleted="ürün silindi";
     }
 }
