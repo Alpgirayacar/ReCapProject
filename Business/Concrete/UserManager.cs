@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -16,48 +17,26 @@ namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-
         IUserDal _userDal;
+
         public UserManager(IUserDal userDal)
         {
-            _userDal = userDal; 
+            _userDal = userDal;
         }
 
-        public IResult Add(User user)
+        public List<OperationClaim> GetClaims(User user)
         {
-            if (user.FirstName.Length < 2)
-            {
-                //magic strings
-                return new ErrorResult(Messages.UserNameInvalid);
-            }
+            return _userDal.GetClaims(user);
+        }
+
+        public void Add(User user)
+        {
             _userDal.Add(user);
-
-            return new SuccessResult(Messages.UserAdded);
         }
 
-        public IDataResult<List<User>> GetAll()
+        public User GetByMail(string email)
         {
-            if (DateTime.Now.Hour == 22)
-            {
-                return new ErrorDataResult<List<User>>(Messages.MaintenanceTime);
-            }
-
-            return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UsersListed);
-
+            return _userDal.Get(u => u.Email == email);
         }
-
-       
-
-        public IDataResult<List<User>> GetAllByUserId(int userId)
-        {
-            return new SuccessDataResult<List<User>>(_userDal.GetAll(p => p.UserId == userId));
-        }
-
-        public IDataResult<User> GetById(int userId)
-        {
-            return new SuccessDataResult<User>(_userDal.Get(p => p.UserId == userId));
-        }
-
-    
     }
 }
