@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCarImageDal :EntityRepositoryBase<CarImage, ReCapDbContext>, ICarImageDal
+    public class EfCarImageDal :EfEntityRepositoryBase<CarImage, ReCapDbContext>, ICarImageDal
     {
         //public void Add(CarImages entity)
         //{
