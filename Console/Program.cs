@@ -14,23 +14,23 @@ CarTest();
 //ColorTest();
 
 
-UserManager userManager = new UserManager(new EfUserDal());
-var result = userManager.GetAll();
-if (result.Success == true)
-{
+//UserManager userManager = new UserManager(new EfUserDal());
+////var result = userManager.GetAll();
+//if (result.Success == true)
+//{
 
-    foreach (var user in result.Data)
-    {
+//    foreach (var user in result.Data)
+//    {
 
-        Console.WriteLine(user.FirstName);
-    }
+//        Console.WriteLine(user.FirstName);
+//    }
 
-}
-else
-{
-    Console.WriteLine(result.Message);
-    Console.WriteLine("===============");
-}
+//}
+//else
+//{
+//    Console.WriteLine(result.Message);
+//    Console.WriteLine("===============");
+//}
 
 
 static void CarTest()
