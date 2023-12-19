@@ -10,6 +10,10 @@ using Core.Utilities.Security.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Core.Utilities.Security.Encyption;
+using Core.DependencyResolves;
+using Core.Utilities.IoC;
+using Core.Extensions;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +23,15 @@ builder.Services.AddControllers();
 
 
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+
+
+
+
+
+
+
+builder.Host.UseServiceProviderFactory(services => new AutofacServiceProviderFactory())
+                        .ConfigureContainer<ContainerBuilder>(builder => { builder.RegisterModule(new AutofacBusinessModule()); });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -36,8 +49,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 
-builder.Host.UseServiceProviderFactory(services => new AutofacServiceProviderFactory())
-                        .ConfigureContainer<ContainerBuilder>(builder => { builder.RegisterModule(new AutofacBusinessModule()); });
+builder.Services.AddDependencyResolves(new ICoreModule[]
+    {
+                    new CoreModule()
+    }
+    );
+
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
